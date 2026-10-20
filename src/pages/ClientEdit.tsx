@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { fetchClient } from '../lib/data'
 import { localDate, mapsDirectionsUrl } from '../lib/schedule'
 import { PHOTO_BUCKET, supabase } from '../lib/supabase'
@@ -11,6 +11,7 @@ import {
   type ClientNote,
   type ClientStatus,
   type Dog,
+  type Signup,
   type Temperament,
   type Visit,
 } from '../lib/types'
@@ -41,7 +42,21 @@ export default function ClientEdit() {
   const { clientId } = useParams()
   const navigate = useNavigate()
   const isNew = !clientId
-  const [form, setForm] = useState<ClientDraft>(BLANK)
+  const signup = (useLocation().state as { signup?: Signup } | null)?.signup
+  const [form, setForm] = useState<ClientDraft>(() =>
+    signup
+      ? {
+          ...BLANK,
+          name: signup.name,
+          phone: signup.phone,
+          email: signup.email,
+          address: signup.address,
+          plan: signup.plan === 'biweekly' ? 'biweekly' : 'weekly',
+          price_cents: signup.plan === 'biweekly' ? 6000 : 8500,
+          instructions: signup.notes,
+        }
+      : BLANK,
+  )
   const [dogs, setDogs] = useState<DogDraft[]>([])
   const [removedDogs, setRemovedDogs] = useState<string[]>([])
   const [notes, setNotes] = useState<ClientNote[]>([])
@@ -134,6 +149,7 @@ export default function ClientEdit() {
       if (d.id) await supabase.from('dogs').update(row).eq('id', d.id)
       else await supabase.from('dogs').insert(row)
     }
+    if (signup) await supabase.from('signups').update({ handled: true }).eq('id', signup.id)
     setSaving(false)
     navigate('/clients')
   }

@@ -5,8 +5,8 @@ About 30 minutes, one time. Everything here is free.
 ## 1. Make the database (Supabase)
 
 1. Go to [supabase.com](https://supabase.com), sign up with GitHub, and click **New project**. Name it `poop-scoopin-boogie`, pick a strong database password (save it somewhere), region **Central US**.
-2. When it's ready, open **SQL Editor**, click **New query**, paste everything from [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql), and click **Run**. You should see "Success".
-3. Go to **Authentication → Sign In / Providers** and turn **off** "Allow new users to sign up". Only people you add can log in.
+2. When it's ready, open **SQL Editor**, click **New query**, paste everything from [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql), and click **Run**. You should see "Success". Then do the same with [`supabase/migrations/0002_customers.sql`](supabase/migrations/0002_customers.sql).
+3. Go to **Authentication → Sign In / Providers** and leave "Allow new users to sign up" **on**. Customers need it to log in with an email link. It's safe: a new login only sees the client record with the same email, and only people in the staff list see the route app.
 4. Go to **Authentication → Users → Add user → Create new user**. Add yourself and your mom with email and password. Tick "Auto confirm user".
 5. Back in **SQL Editor**, run this once, with your real emails and names:
 
@@ -27,6 +27,9 @@ About 30 minutes, one time. Everything here is free.
 2. Go to **Settings → Pages** and set **Source** to **GitHub Actions**.
 3. Go to **Actions → Deploy app → Run workflow**. When it turns green, your app is at
    `https://<your-github-name>.github.io/poop-scoopin-boogie/`.
+4. In Supabase, go to **Authentication → URL Configuration**. Set **Site URL** to that app address and add it under **Redirect URLs** too. This is where customer login links send people.
+
+Customers sign up at `.../poop-scoopin-boogie/#/signup`. Put that link on your flyers and Google profile. New sign-ups show up at the top of the Clients tab.
 
 ## 3. Turn on customer emails (Gmail)
 
@@ -37,7 +40,16 @@ About 30 minutes, one time. Everything here is free.
    - `GMAIL_APP_PASSWORD` = the 16-letter app password
 4. In Supabase, go to **Edge Functions → Deploy a new function → Via Editor**. Name it exactly `complete-visit`, paste everything from [`supabase/functions/complete-visit/index.ts`](supabase/functions/complete-visit/index.ts), and click **Deploy**.
 
-## 4. Put it on your phones
+## 4. Turn on online payments (Stripe) — later
+
+1. Make a free account at [stripe.com](https://stripe.com) and finish the business details.
+2. In Stripe, go to **Settings → Billing → Customer portal** and click **Activate**.
+3. Copy your **Secret key** from **Developers → API keys**. In Supabase **Edge Functions → Secrets**, add `STRIPE_SECRET_KEY`.
+4. Deploy a new function named exactly `billing-portal` with the code from [`supabase/functions/billing-portal/index.ts`](supabase/functions/billing-portal/index.ts).
+
+Until this is done, the customer page's "Pay or update card" button says online payments are coming soon.
+
+## 5. Put it on your phones
 
 Open the app link on each phone.
 

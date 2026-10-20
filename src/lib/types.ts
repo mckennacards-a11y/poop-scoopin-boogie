@@ -45,6 +45,18 @@ export interface Visit {
   email_error: string | null
 }
 
+export interface Signup {
+  id: string
+  name: string
+  phone: string
+  email: string
+  address: string
+  dog_count: number
+  plan: 'weekly' | 'biweekly' | 'one_time'
+  notes: string
+  created_at: string
+}
+
 export interface ClientNote {
   id: string
   client_id: string

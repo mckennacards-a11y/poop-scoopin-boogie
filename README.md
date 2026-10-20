@@ -6,6 +6,8 @@ The route app for Poop Scoopin' Boogie, a pet waste removal business in Tyler, T
 - **Job:** address, gate code, dogs, and instructions, an SOP checklist, and required yard and latched-gate photos. Completing the job emails the customer both photos.
 - **Clients:** contact info, yard access, dogs, plan, payment status, notes, and visit history.
 - **SOPs:** safety and cleaning steps.
+- **Customer page:** customers log in with an email link to see visit photos, their plan and dogs, update gate details, and pay through Stripe.
+- **Sign-up form** (`#/signup`): new customers send their info, which shows up in the Clients tab.
 
 Setup: see [SETUP.md](SETUP.md).
 
@@ -16,6 +18,7 @@ React + Vite on GitHub Pages, Supabase (login, Postgres, photo storage, edge fun
 ```sh
 npm install
 npm test
+npm run demo  # sample data, no accounts needed
 npm run dev   # needs VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env.local
 ```
 
