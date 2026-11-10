@@ -31,7 +31,7 @@ const BLANK: ClientDraft = {
   plan: 'weekly',
   service_day: 2,
   biweekly_anchor: null,
-  price_cents: 8500,
+  price_cents: 6000,
   status: 'active',
   payment_issue_since: null,
   paid_through: null,
@@ -52,7 +52,7 @@ export default function ClientEdit() {
           email: signup.email,
           address: signup.address,
           plan: signup.plan === 'biweekly' ? 'biweekly' : 'weekly',
-          price_cents: signup.plan === 'biweekly' ? 6000 : 8500,
+          price_cents: (signup.plan === 'biweekly' ? 4000 : 6000) + Math.max(0, signup.dog_count - 1) * 1000,
           instructions: signup.notes,
         }
       : BLANK,

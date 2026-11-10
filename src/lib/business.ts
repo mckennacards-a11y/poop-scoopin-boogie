@@ -6,24 +6,24 @@ export const BUSINESS = {
   // Leave blank to hide. Example: '(903) 555-0100'
   phone: '',
   // Leave blank to hide. Example: 'poopscoopinboogie@gmail.com'
-  email: '',
+  email: 'poopscoopinboogietexas@gmail.com',
 }
 
 export const PLANS = [
   {
     value: 'weekly',
     name: 'Weekly',
-    price: '$85',
+    price: '$60',
     per: '/month',
-    detail: 'Once a week, 1–2 dogs. +$10/month for each extra dog.',
+    detail: 'Once a week, 1 dog. +$10/month for each extra dog.',
     popular: true,
   },
   {
     value: 'biweekly',
     name: 'Every other week',
-    price: '$60',
+    price: '$40',
     per: '/month',
-    detail: 'Every two weeks, 1–2 dogs. +$5/month for each extra dog.',
+    detail: 'Every two weeks, 1 dog. +$10/month for each extra dog.',
     popular: false,
   },
   {
@@ -55,7 +55,7 @@ export const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'How much does it cost?',
-    a: 'Weekly service is $85 a month for 1–2 dogs, and every other week is $60 a month. Extra dogs add a little. If your yard hasn’t been cleaned in a while, the first visit may cost more. We’ll always tell you the price before we start.',
+    a: 'Weekly service is $60 a month for 1 dog, and every other week is $40 a month. Each extra dog adds $10 a month. If your yard hasn’t been cleaned in a while, the first visit may cost more. We’ll always tell you the price before we start.',
   },
   {
     q: 'Is there a contract?',

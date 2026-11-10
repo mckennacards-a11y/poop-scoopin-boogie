@@ -34,7 +34,7 @@ create table if not exists public.clients (
   service_day smallint not null check (service_day between 0 and 6),
   -- For biweekly plans: any date that was a service day. Visits fall every 14 days from it.
   biweekly_anchor date,
-  price_cents integer not null default 8500 check (price_cents >= 0),
+  price_cents integer not null default 6000 check (price_cents >= 0),
   status text not null default 'active'
     check (status in ('active', 'payment_issue', 'paused', 'cancelled')),
   payment_issue_since date,
