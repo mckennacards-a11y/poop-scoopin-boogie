@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react'
 import { HashRouter, NavLink, Navigate, Route, Routes } from 'react-router-dom'
-import type { Session } from '@supabase/supabase-js'
-import { isConfigured, supabase } from './lib/supabase'
+import { AuthProvider, useAuth } from './lib/auth'
+import { isConfigured } from './lib/supabase'
+import Home from './pages/Home'
+import Faq from './pages/Faq'
+import Signup from './pages/Signup'
 import Login from './pages/Login'
+import CustomerHome from './pages/CustomerHome'
 import Today from './pages/Today'
 import Job from './pages/Job'
 import Clients from './pages/Clients'
 import ClientEdit from './pages/ClientEdit'
 import Sops from './pages/Sops'
-import Signup from './pages/Signup'
-import CustomerHome from './pages/CustomerHome'
 
 export default function App() {
   if (!isConfigured) {
@@ -23,56 +24,63 @@ export default function App() {
     )
   }
   return (
-    <HashRouter>
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<SignedIn />} />
-      </Routes>
-    </HashRouter>
+    <AuthProvider>
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<LoginRoute />} />
+          <Route path="/account" element={<CustomerRoute />} />
+          <Route path="/app/*" element={<StaffApp />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </HashRouter>
+    </AuthProvider>
   )
 }
 
-/** Everything behind a login. Staff get the route app; customers get their own page. */
-function SignedIn() {
-  const [session, setSession] = useState<Session | null | undefined>(undefined)
-  const [role, setRole] = useState<'staff' | 'customer' | undefined>(undefined)
+function LoginRoute() {
+  const { session, role } = useAuth()
+  if (session && role) return <Navigate to={role === 'staff' ? '/app' : '/account'} replace />
+  if (session === undefined || (session && !role)) return null
+  return <Login />
+}
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session))
-    const { data } = supabase.auth.onAuthStateChange((_event, s) => setSession(s))
-    return () => data.subscription.unsubscribe()
-  }, [])
-
-  const userId = session?.user.id
-  useEffect(() => {
-    if (!userId) return
-    supabase.rpc('is_staff').then(({ data }) => setRole(data === true ? 'staff' : 'customer'))
-  }, [userId])
-
-  if (session === undefined) return null
-  if (!session) return <Login />
+function CustomerRoute() {
+  const { session, role } = useAuth()
+  if (session === null) return <Navigate to="/login" replace />
   if (!role) return null
-  if (role === 'customer') return <CustomerHome />
+  if (role === 'staff') return <Navigate to="/app" replace />
+  return <CustomerHome />
+}
+
+/** The route app for you and your mom. */
+function StaffApp() {
+  const { session, role } = useAuth()
+  if (session === null) return <Navigate to="/login" replace />
+  if (!role) return null
+  if (role !== 'staff') return <Navigate to="/account" replace />
 
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<Today />} />
-        <Route path="/job/:clientId" element={<Job />} />
-        <Route path="/clients" element={<Clients />} />
-        <Route path="/clients/new" element={<ClientEdit />} />
-        <Route path="/clients/:clientId" element={<ClientEdit />} />
-        <Route path="/sops" element={<Sops />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route index element={<Today />} />
+        <Route path="job/:clientId" element={<Job />} />
+        <Route path="clients" element={<Clients />} />
+        <Route path="clients/new" element={<ClientEdit />} />
+        <Route path="clients/:clientId" element={<ClientEdit />} />
+        <Route path="sops" element={<Sops />} />
+        <Route path="*" element={<Navigate to="/app" replace />} />
       </Routes>
       <nav className="tabs" aria-label="Main">
-        <NavLink to="/" end>
+        <NavLink to="/app" end>
           <span className="icon" aria-hidden="true">🐾</span>Today
         </NavLink>
-        <NavLink to="/clients">
+        <NavLink to="/app/clients">
           <span className="icon" aria-hidden="true">🏠</span>Clients
         </NavLink>
-        <NavLink to="/sops">
+        <NavLink to="/app/sops">
           <span className="icon" aria-hidden="true">🧤</span>SOPs
         </NavLink>
       </nav>

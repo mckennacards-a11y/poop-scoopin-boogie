@@ -120,7 +120,7 @@ export default function Job() {
   return (
     <main className="page">
       <div className="row between">
-        <Link to="/" className="btn small">
+        <Link to="/app" className="btn small">
           ← Today
         </Link>
         {client.status === 'payment_issue' && <span className="pill payment_issue">Payment issue</span>}
@@ -250,7 +250,7 @@ export default function Job() {
           <div className={`alert ${result.startsWith('Job marked') ? 'warn' : 'ok'}`}>
             {result || (visit?.emailed_at ? 'Done and emailed.' : 'Done.')}
           </div>
-          <Link to="/" className="btn primary big">
+          <Link to="/app" className="btn primary big">
             Back to route
           </Link>
         </>

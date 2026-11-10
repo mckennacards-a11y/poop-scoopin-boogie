@@ -1,15 +1,19 @@
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import PublicLayout from '../components/PublicLayout'
+import { PLANS as PLAN_INFO } from '../lib/business'
 import { supabase } from '../lib/supabase'
 
-const PLANS = [
-  { value: 'weekly', label: 'Weekly', price: 'from $85/month' },
-  { value: 'biweekly', label: 'Every other week', price: 'from $60/month' },
-  { value: 'one_time', label: 'One-time cleanup', price: 'from $60' },
-] as const
+const PLANS = PLAN_INFO.map((p) => ({
+  value: p.value,
+  label: p.name,
+  price: p.per === '+' ? `from ${p.price}` : `from ${p.price}${p.per}`,
+}))
 
 export default function Signup() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', address: '', dog_count: 1, plan: 'weekly', notes: '' })
+  const [params] = useSearchParams()
+  const startPlan = PLANS.some((p) => p.value === params.get('plan')) ? params.get('plan')! : 'weekly'
+  const [form, setForm] = useState({ name: '', phone: '', email: '', address: '', dog_count: 1, plan: startPlan, notes: '' })
   const [busy, setBusy] = useState(false)
   const [done, setDone] = useState(false)
   const [error, setError] = useState('')
@@ -32,6 +36,7 @@ export default function Signup() {
   }
 
   return (
+    <PublicLayout>
     <main className="page" style={{ paddingBottom: 32 }}>
       <header className="stack" style={{ alignItems: 'center', textAlign: 'center' }}>
         <img src="./logo.png" alt="Poop Scoopin' Boogie" style={{ width: 180 }} />
@@ -43,7 +48,7 @@ export default function Signup() {
         <section className="card">
           <h2>Thanks, {form.name.split(' ')[0]}!</h2>
           <div>We got your info and will call or text you within a day to set up your first visit.</div>
-          <Link to="/" className="btn">
+          <Link to="/login" className="btn">
             Customer login
           </Link>
         </section>
@@ -109,10 +114,11 @@ export default function Signup() {
             {busy ? 'Sending…' : 'Sign me up'}
           </button>
           <div className="muted" style={{ textAlign: 'center' }}>
-            Already a customer? <Link to="/">Log in</Link>
+            Already a customer? <Link to="/login">Log in</Link>
           </div>
         </form>
       )}
     </main>
+    </PublicLayout>
   )
 }

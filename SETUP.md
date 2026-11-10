@@ -29,7 +29,7 @@ About 30 minutes, one time. Everything here is free.
    `https://<your-github-name>.github.io/poop-scoopin-boogie/`.
 4. In Supabase, go to **Authentication → URL Configuration**. Set **Site URL** to that app address and add it under **Redirect URLs** too. This is where customer login links send people.
 
-Customers sign up at `.../poop-scoopin-boogie/#/signup`. Put that link on your flyers and Google profile. New sign-ups show up at the top of the Clients tab.
+The public website is the app address itself (home page, `#/faq`, `#/signup`). Customers sign up at `.../poop-scoopin-boogie/#/signup`. You and your mom use `.../poop-scoopin-boogie/#/app`. Put that link on your flyers and Google profile. New sign-ups show up at the top of the Clients tab.
 
 ## 3. Turn on customer emails (Gmail)
 

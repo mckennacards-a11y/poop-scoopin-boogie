@@ -37,7 +37,7 @@ export default function Clients() {
     <main className="page">
       <div className="row between">
         <h1>Clients</h1>
-        <Link to="/clients/new" className="btn primary small">
+        <Link to="/app/clients/new" className="btn primary small">
           + Add client
         </Link>
       </div>
@@ -60,7 +60,7 @@ export default function Clients() {
               </span>
               {s.notes && <span className="muted">“{s.notes}”</span>}
               <div className="row">
-                <button className="btn small primary" onClick={() => navigate('/clients/new', { state: { signup: s } })}>
+                <button className="btn small primary" onClick={() => navigate('/app/clients/new', { state: { signup: s } })}>
                   Add as client
                 </button>
                 {s.phone && (
@@ -90,7 +90,7 @@ export default function Clients() {
       )}
       <section className="stack">
         {shown.map((c) => (
-          <Link key={c.id} to={`/clients/${c.id}`} className="card flat job">
+          <Link key={c.id} to={`/app/clients/${c.id}`} className="card flat job">
             <span className="grow stack" style={{ gap: 2 }}>
               <span className="row between">
                 <strong>{c.name}</strong>

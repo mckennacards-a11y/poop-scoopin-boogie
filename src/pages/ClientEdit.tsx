@@ -151,7 +151,7 @@ export default function ClientEdit() {
     }
     if (signup) await supabase.from('signups').update({ handled: true }).eq('id', signup.id)
     setSaving(false)
-    navigate('/clients')
+    navigate('/app/clients')
   }
 
   async function addNote() {
@@ -174,7 +174,7 @@ export default function ClientEdit() {
   return (
     <main className="page">
       <div className="row between">
-        <Link to="/clients" className="btn small">
+        <Link to="/app/clients" className="btn small">
           ← Clients
         </Link>
         {!isNew && form.address && (

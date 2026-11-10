@@ -32,7 +32,7 @@ export default function Today() {
   function goNext() {
     if (!next) return
     window.open(mapsDirectionsUrl(next.address), '_blank', 'noopener')
-    navigate(`/job/${next.id}`)
+    navigate(`/app/job/${next.id}`)
   }
 
   return (
@@ -58,7 +58,7 @@ export default function Today() {
           <div className="muted">Paused for not paying. Give them a call.</div>
           {callList.map((c) => (
             <div className="row between" key={c.id}>
-              <Link to={`/clients/${c.id}`} className="grow">
+              <Link to={`/app/clients/${c.id}`} className="grow">
                 {c.name}
               </Link>
               {c.phone && (
@@ -91,7 +91,7 @@ export default function Today() {
         {route.map((c, i) => {
           const v = visitFor(c.id)
           return (
-            <Link key={c.id} to={`/job/${c.id}`} className={`card job ${v?.status === 'complete' ? 'complete' : ''}`}>
+            <Link key={c.id} to={`/app/job/${c.id}`} className={`card job ${v?.status === 'complete' ? 'complete' : ''}`}>
               <span className="num">{v?.status === 'complete' ? '✓' : i + 1}</span>
               <span className="grow stack" style={{ gap: 4 }}>
                 <strong>{c.name}</strong>

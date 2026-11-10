@@ -202,3 +202,107 @@ textarea { min-height: 72px; resize: vertical; }
 .login img { width: 200px; margin: 0 auto; }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---------- Public website ---------- */
+.site { min-height: 100%; display: flex; flex-direction: column; }
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: calc(10px + env(safe-area-inset-top, 0px)) 16px 10px;
+  background: var(--cream);
+  border-bottom: 2px solid var(--ink);
+}
+.site-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); min-width: 0; }
+.site-brand img { width: 36px; height: 36px; border-radius: 8px; }
+.site-brand span { font: 900 1.05rem var(--display); color: var(--pink-deep); white-space: nowrap; }
+.site-nav { display: flex; align-items: center; gap: 14px; }
+.site-nav a:not(.btn) { color: var(--ink); font-weight: 800; text-decoration: none; }
+.site-nav a.active:not(.btn) { color: var(--pink-deep); }
+@media (max-width: 480px) {
+  .site-brand span { display: none; }
+  .site-nav { gap: 10px; font-size: 0.95rem; }
+}
+
+.hero {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 32px 16px 40px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  align-items: center;
+}
+.hero-copy { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.eyebrow { margin: 0; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.8rem; color: var(--denim); }
+.hero-title { font-size: clamp(2.1rem, 6vw, 3.4rem); color: var(--ink); }
+.hero-sub { margin: 0; font-size: 1.1rem; color: var(--ink-soft); max-width: 34rem; }
+.hero-logo { width: 100%; max-width: 420px; justify-self: center; border-radius: 24px; border: 2px solid var(--ink); background: #fff; }
+.btn.big-inline { min-height: 56px; font-size: 1.1rem; padding: 12px 24px; }
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; padding-top: 20px; }
+  .hero-logo { order: -1; max-width: 260px; }
+}
+
+.band { padding: 40px 16px; }
+.band.alt { background: var(--pink-soft); border-block: 2px solid var(--ink); }
+.band.cta { background: var(--denim); color: #fff; }
+.band.cta .section-title { color: #fff; }
+.band-inner { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+.section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--pink-deep); }
+.center-text { text-align: center; align-items: center; }
+
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 760px) { .plans { grid-template-columns: 1fr; } }
+.plan {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.plan.popular { box-shadow: 0 6px 0 var(--pink); }
+.plan .pill { align-self: flex-start; }
+.plan p { margin: 0; flex: 1; }
+.price { font: 900 2.6rem var(--display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.price span { font: 700 1rem var(--body); color: var(--ink-soft); margin-left: 2px; }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+.steps li { background: var(--card); border: 2px solid var(--ink); border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.steps p { margin: 0; color: var(--ink-soft); }
+.step-num {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--pink); color: #fff; border: 2px solid var(--ink);
+  display: grid; place-items: center; font: 900 1.2rem var(--display);
+}
+
+.perks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px; }
+@media (max-width: 760px) { .perks { grid-template-columns: 1fr; } }
+.perks li { padding-left: 28px; position: relative; }
+.perks li::before { content: '🐾'; position: absolute; left: 0; top: 0; }
+
+.faq { display: flex; flex-direction: column; gap: 10px; }
+.faq details { background: var(--card); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+.faq summary { font-weight: 800; cursor: pointer; }
+.faq details p { margin: 8px 0 0; color: var(--ink-soft); }
+
+.site-footer {
+  margin-top: auto;
+  padding: 28px 16px calc(28px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  justify-content: center;
+  text-align: center;
+  border-top: 2px solid var(--ink);
+}
+.site-footer img { width: 90px; border-radius: 12px; }
+.site-footer nav { gap: 16px; justify-content: center; }

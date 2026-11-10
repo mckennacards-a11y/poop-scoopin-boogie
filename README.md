@@ -2,6 +2,7 @@
 
 The route app for Poop Scoopin' Boogie, a pet waste removal business in Tyler, Texas.
 
+- **Website:** public home page with prices, how it works and FAQ (`#/`, `#/faq`). Staff app lives at `#/app`.
 - **Today:** the yards due today in route order, a "Next house" button that opens Google Maps, and a call list of paused clients.
 - **Job:** address, gate code, dogs, and instructions, an SOP checklist, and required yard and latched-gate photos. Completing the job emails the customer both photos.
 - **Clients:** contact info, yard access, dogs, plan, payment status, notes, and visit history.
